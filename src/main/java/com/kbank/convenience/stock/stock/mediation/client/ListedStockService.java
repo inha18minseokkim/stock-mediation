@@ -14,20 +14,20 @@ import java.util.concurrent.CompletableFuture;
 @FeignClient(value = "listed-stock-web-service", url = "http://127.0.0.1:8088/listed-stock-web-service")
 public interface ListedStockService {
     @GetMapping(path= "/v1/listedStock/{itemCodeNumber}")
-    CompletableFuture<GetListedStockResponse> getListedStock(@PathVariable("itemCodeNumber") String itemCodeNumber);
+    GetListedStockResponse getListedStock(@PathVariable("itemCodeNumber") String itemCodeNumber);
     @GetMapping(path="/v1/listedStock/latestPrice/{itemCodeNumber}")
-    CompletableFuture<GetListedStockLatestPriceResponse> getListedStockLatestPrice(@PathVariable("itemCodeNumber")String itemCodeNumber);
+    GetListedStockLatestPriceResponse getListedStockLatestPrice(@PathVariable("itemCodeNumber")String itemCodeNumber);
     @GetMapping(path="/v1/listedStock/outline/{itemCodeNumber}")
-    CompletableFuture<GetListedStockOutlineResponse> getListedStockOutline(@PathVariable("itemCodeNumber")String itemCodeNumber);
+    GetListedStockOutlineResponse getListedStockOutline(@PathVariable("itemCodeNumber")String itemCodeNumber);
     @GetMapping(path = "/v1/listedStockPrices")
-    CompletableFuture<GetListedStockPricesResponse> getListedStockPrices(@SpringQueryMap GetListedStockPricesRequest request);
+    GetListedStockPricesResponse getListedStockPrices(@SpringQueryMap GetListedStockPricesRequest request);
     @GetMapping(path= "/v1/listedStock/financial/ratio/{itemCodeNumber}")
-    CompletableFuture<GetListedStockFinancialRatioResponse> getListedStockFinancialRatio(@PathVariable("itemCodeNumber")String itemCodeNumber);
+    GetListedStockFinancialRatioResponse getListedStockFinancialRatio(@PathVariable("itemCodeNumber")String itemCodeNumber);
     @GetMapping(path= "/v1/listedStock/financial/statement/latest/{itemCodeNumber}")
-    CompletableFuture<GetListedStockFinancialStatementResponse> getListedStockFinancialStatement(@PathVariable("itemCodeNumber")String itemCodeNumber);
+    GetListedStockFinancialStatementResponse getListedStockFinancialStatement(@PathVariable("itemCodeNumber")String itemCodeNumber);
     @GetMapping(path="/v1/listedStock/summary/{itemCodeNumber}")
-    CompletableFuture<GetListedStockSummaryResponse> getListedStockSummary(@PathVariable("itemCodeNumber")String itemCodeNumber);
+    GetListedStockSummaryResponse getListedStockSummary(@PathVariable("itemCodeNumber")String itemCodeNumber);
     @GetMapping(path="/v1/listedStock/financial/statement/past/{itemCodeNumber}/{targetFinancialStatement}")
-    CompletableFuture<GetListedStockPastFinancialStatementsResponse> getListedStockPastFinancialStatements(@PathVariable("itemCodeNumber") String itemCodeNumber
+    GetListedStockPastFinancialStatementsResponse getListedStockPastFinancialStatements(@PathVariable("itemCodeNumber") String itemCodeNumber
             , @PathVariable("targetFinancialStatement") String targetFinancialStatement);
 }
