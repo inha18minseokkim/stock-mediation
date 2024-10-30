@@ -33,6 +33,6 @@ public record GetListedStockResponse(
         LocalDate establishDate,
         LocalDate listingDate,
         Long outStandingStockQuantity,
-        Boolean tradingStop
+        String tradingStop
 ) {
 }

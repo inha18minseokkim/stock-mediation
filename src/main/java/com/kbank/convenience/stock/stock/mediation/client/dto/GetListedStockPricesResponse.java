@@ -27,7 +27,7 @@ public record GetListedStockPricesResponse(
             Double changeRate,
             Long alreadyIssuedStock,
             Long marketPriceTotal,
-            Boolean tradingStop
+            String tradingStop
     ) {
 
     }

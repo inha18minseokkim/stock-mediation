@@ -20,6 +20,6 @@ public record GetListedStockLatestPriceResponse(
         Double changeRate,
         Long alreadyIssuedStock,
         Long marketPriceTotal,
-        Boolean tradingStop
+        String tradingStop
 ) {
 }
