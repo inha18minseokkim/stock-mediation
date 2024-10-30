@@ -4,10 +4,8 @@ import com.kbank.convenience.stock.stock.mediation.client.dto.*;
 import feign.Param;
 import feign.QueryMap;
 import feign.RequestLine;
-import org.springframework.cloud.openfeign.SpringQueryMap;
 import reactor.core.publisher.Mono;
 
-//@FeignClient(value = "listed-stock-web-service", url = "http://127.0.0.1:8088/listed-stock-web-service")
 public interface ListedStockService {
     @RequestLine("GET /v1/listedStock/{itemCodeNumber}")
     Mono<GetListedStockResponse> getListedStock(@Param("itemCodeNumber") String itemCodeNumber);

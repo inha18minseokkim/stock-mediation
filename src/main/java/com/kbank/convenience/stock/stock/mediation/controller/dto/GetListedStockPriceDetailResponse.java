@@ -1,6 +1,8 @@
 package com.kbank.convenience.stock.stock.mediation.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +27,9 @@ public record GetListedStockPriceDetailResponse(
 ) {
     @Builder
     public record PriceElement(
-            LocalDateTime baseDateTime,
+            @JsonFormat(pattern = "yyyyMMdd")
+            @DateTimeFormat(pattern = "yyyyMMdd")
+            LocalDate baseDate,
             Long closePrice,
             Long changePrice,
             Double changeRate

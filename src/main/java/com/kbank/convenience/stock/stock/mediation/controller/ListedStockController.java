@@ -51,7 +51,5 @@ public class ListedStockController {
                                 .yearlyMaxPrice(it.getT3().maxPrice())
                                 .build()).block()
         );
-
-
     }
 }

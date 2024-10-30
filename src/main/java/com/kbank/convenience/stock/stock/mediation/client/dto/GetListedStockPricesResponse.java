@@ -2,6 +2,7 @@ package com.kbank.convenience.stock.stock.mediation.client.dto;
 
 import lombok.Builder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public record GetListedStockPricesResponse(
 ) {
     @Builder
     public record GetListedStockPricesSubResponse(
-            LocalDateTime baseDateTime,
+            LocalDate baseDate,
             String itemCodeNumber,
             String stockKoreanName,
             Long openPrice,
