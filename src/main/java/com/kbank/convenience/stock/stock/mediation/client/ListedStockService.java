@@ -1,33 +1,27 @@
 package com.kbank.convenience.stock.stock.mediation.client;
 
 import com.kbank.convenience.stock.stock.mediation.client.dto.*;
+import feign.Param;
 import feign.QueryMap;
-import org.springframework.cloud.openfeign.FeignClient;
+import feign.RequestLine;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import reactor.core.publisher.Mono;
 
-import java.util.concurrent.CompletableFuture;
-
-@FeignClient(value = "listed-stock-web-service", url = "http://127.0.0.1:8088/listed-stock-web-service")
+//@FeignClient(value = "listed-stock-web-service", url = "http://127.0.0.1:8088/listed-stock-web-service")
 public interface ListedStockService {
-    @GetMapping(path= "/v1/listedStock/{itemCodeNumber}")
-    GetListedStockResponse getListedStock(@PathVariable("itemCodeNumber") String itemCodeNumber);
-    @GetMapping(path="/v1/listedStock/latestPrice/{itemCodeNumber}")
-    GetListedStockLatestPriceResponse getListedStockLatestPrice(@PathVariable("itemCodeNumber")String itemCodeNumber);
-    @GetMapping(path="/v1/listedStock/outline/{itemCodeNumber}")
-    GetListedStockOutlineResponse getListedStockOutline(@PathVariable("itemCodeNumber")String itemCodeNumber);
-    @GetMapping(path = "/v1/listedStockPrices")
-    GetListedStockPricesResponse getListedStockPrices(@SpringQueryMap GetListedStockPricesRequest request);
-    @GetMapping(path= "/v1/listedStock/financial/ratio/{itemCodeNumber}")
-    GetListedStockFinancialRatioResponse getListedStockFinancialRatio(@PathVariable("itemCodeNumber")String itemCodeNumber);
-    @GetMapping(path= "/v1/listedStock/financial/statement/latest/{itemCodeNumber}")
-    GetListedStockFinancialStatementResponse getListedStockFinancialStatement(@PathVariable("itemCodeNumber")String itemCodeNumber);
-    @GetMapping(path="/v1/listedStock/summary/{itemCodeNumber}")
-    GetListedStockSummaryResponse getListedStockSummary(@PathVariable("itemCodeNumber")String itemCodeNumber);
-    @GetMapping(path="/v1/listedStock/financial/statement/past/{itemCodeNumber}/{targetFinancialStatement}")
-    GetListedStockPastFinancialStatementsResponse getListedStockPastFinancialStatements(@PathVariable("itemCodeNumber") String itemCodeNumber
-            , @PathVariable("targetFinancialStatement") String targetFinancialStatement);
+    @RequestLine("GET /v1/listedStock/{itemCodeNumber}")
+    Mono<GetListedStockResponse> getListedStock(@Param("itemCodeNumber") String itemCodeNumber);
+    @RequestLine("GET /v1/listedStock/{itemCodeNumber}/price/latest")
+    Mono<GetListedStockLatestPriceResponse> getListedStockLatestPrice(@Param("itemCodeNumber")String itemCodeNumber);
+    @RequestLine("GET /v1/listedStock/{itemCodeNumber}/prices")
+    Mono<GetListedStockPricesResponse> getListedStockPrices(@Param("itemCodeNumber") String itemCodeNumber,@QueryMap GetListedStockPricesRequest request);
+    @RequestLine("GET /v1/listedStock/financial/ratio/{itemCodeNumber}")
+    Mono<GetListedStockFinancialRatioResponse> getListedStockFinancialRatio(@Param("itemCodeNumber")String itemCodeNumber);
+    @RequestLine("GET /v1/listedStock/financial/statement/latest/{itemCodeNumber}")
+    Mono<GetListedStockFinancialStatementResponse> getListedStockFinancialStatement(@Param("itemCodeNumber")String itemCodeNumber);
+    @RequestLine("GET /v1/listedStock/summary/{itemCodeNumber}")
+    Mono<GetListedStockSummaryResponse> getListedStockSummary(@Param("itemCodeNumber")String itemCodeNumber);
+    @RequestLine("GET /v1/listedStock/financial/statement/past/{itemCodeNumber}/{targetFinancialStatement}")
+    Mono<GetListedStockPastFinancialStatementsResponse> getListedStockPastFinancialStatements(@Param("itemCodeNumber") String itemCodeNumber
+            , @Param("targetFinancialStatement") String targetFinancialStatement);
 }

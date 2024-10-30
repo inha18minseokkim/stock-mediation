@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public record GetListedStockPricesRequest(
         @DateTimeFormat(pattern = "yyyyMMddHHmmss")
         LocalDateTime baseDateTime,
-        String itemCodeNumber,
         Long deltaDay
 ) {
 }

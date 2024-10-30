@@ -3,25 +3,48 @@ package com.kbank.convenience.stock.stock.mediation.client.dto;
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 public record GetListedStockSummaryResponse(
         String itemCodeNumber,
-        String branchEnglishName,
-        String branchKoreanName,
-        String businessRegistrationNumber,
-        LocalDate employeeBaseDate,
-        Long employeeNumber,
-        Boolean exists,
-        Boolean close,
-        Boolean externalAuditExisting,
-        Boolean supervised,
-        String listedMarket,
+        String companyContractionName,
+        String stockKoreanName,
+        String stockEnglishName,
         String companyEnglishName,
         String companyKoreanName,
-        String companyContractionName,
+        String representativeName,
+        String representativeEnglishName,
         String mainTransactionBank,
+        String englishRoadNameAddress,
+        String roadNameAddress,
         String status,
-        String homePageUrl
+        SummaryElement businessStatus,
+        String email,
+        String companyDetail,
+        String isExternalAudit,
+        String companyScale,
+        String homePageUrl,
+        String telephone,
+        String country,
+        String niceCodeNumber,
+        String businessRegistrationNumber,
+        String corporationNumber,
+        Long employeeNumber,
+        LocalDate employeeBaseDate,
+        LocalDate listedDate,
+        String listedMarketName,
+        LocalDate companyFoundedDate,
+        SummaryElement businessOverview,
+        String industryName,
+        String industryId,
+        String businessScopeKorean,
+        String businessScopeEnglish
 ) {
+    public record SummaryElement(
+           String title,
+           String source,
+           List<String>content,
+           String refDate
+    ) {}
 }
