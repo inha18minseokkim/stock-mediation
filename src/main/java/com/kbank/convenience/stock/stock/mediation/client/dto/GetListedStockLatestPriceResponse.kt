@@ -1,25 +1,9 @@
-package com.kbank.convenience.stock.stock.mediation.client.dto;
+package com.kbank.convenience.stock.stock.mediation.client.dto
 
-import lombok.Builder;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import lombok.Builder
+import java.time.LocalDateTime
 
 @Builder
-public record GetListedStockLatestPriceResponse(
-        LocalDateTime baseDateTime,
-        String itemCodeNumber,
-        String stockKoreanName,
-        Long openPrice,
-        Long highPrice,
-        Long lowPrice,
-        Long closePrice,
-        Long volume,
-        Long value,
-        Long changePrice,
-        Double changeRate,
-        Long alreadyIssuedStock,
-        Long marketPriceTotal,
-        String tradingStop
-) {
-}
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class GetListedStockLatestPriceResponse(val baseDateTime: LocalDateTime, val itemCodeNumber: String?, val stockKoreanName: String?, val openPrice: Long, val highPrice: Long, val lowPrice: Long, val closePrice: Long, val volume: Long, val value: Long, val changePrice: Long, val changeRate: Double, val alreadyIssuedStock: Long, val marketPriceTotal: Long, val tradingStop: String?)

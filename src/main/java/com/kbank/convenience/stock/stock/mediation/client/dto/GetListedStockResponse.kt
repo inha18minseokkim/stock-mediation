@@ -1,38 +1,35 @@
-package com.kbank.convenience.stock.stock.mediation.client.dto;
+package com.kbank.convenience.stock.stock.mediation.client.dto
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import lombok.Builder
+import lombok.Data
+import java.time.LocalDate
 
-import java.time.LocalDate;
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class GetListedStockResponse(val itemCodeNumber: String?,
+                                  val stockKoreanName: String?,
+                                  val exchangeMarketCode: String?,
+                                  val marketCode: String?,
+                                  val niceCodeNumber: String?,
+                                  val representativeName: String?,
+                                  val businessRegistrationNumber: String?,
+                                  val corporationNumber: String?,
+                                  val telephoneNumber: String?,
+                                  val faxNumber: String?,
+                                  val email: String?,
+                                  val zipCode: String?,
+                                  val landAddress: String?,
+                                  val roadNameAddress: String?,
+                                  val groupId: String?,
+                                  val companyType: String?,
+                                  val companyDetail: String?,
+                                  val companyScale: String?,
+                                  val conglomerateId: String?,
+                                  val industryId: String?,
+                                  val industryName: String?,
+                                  val accountType: String?,
+                                  val fiscalEndYear: String?,
+                                  val businessScope: String?,
+                                  val establishDate: LocalDate, val listingDate: LocalDate, val outStandingStockQuantity: Long, val tradingStop: String?)
 
-@Builder
-public record GetListedStockResponse(
-        String itemCodeNumber,
-        String stockKoreanName,
-        String exchangeMarketCode,
-        String marketCode,
-        String niceCodeNumber,
-        String representativeName,
-        String businessRegistrationNumber,
-        String corporationNumber,
-        String telephoneNumber,
-        String faxNumber,
-        String email,
-        String zipCode,
-        String landAddress,
-        String roadNameAddress,
-        String groupId,
-        String companyType,
-        String companyDetail,
-        String companyScale,
-        String conglomerateId,
-        String industryId,
-        String industryName,
-        String accountType,
-        String fiscalEndYear,
-        String businessScope,
-        LocalDate establishDate,
-        LocalDate listingDate,
-        Long outStandingStockQuantity,
-        String tradingStop
-) {
-}
