@@ -22,7 +22,8 @@ public class ApiClientConfig {
     public ListedStockService listedStockService() {
         ListedStockService target = ReactorFeign.builder()
                 .decoder(new ReactorDecoder(jacksonDecoder()))
-                .target(ListedStockService.class, "http://127.0.0.1:8088/listed-stock-service");
+                .target(ListedStockService.class, "http://127.0.0.1:8088/listed-stock-service")
+                ;
         return target;
     }
 }

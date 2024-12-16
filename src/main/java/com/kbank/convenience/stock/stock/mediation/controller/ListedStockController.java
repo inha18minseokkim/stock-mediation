@@ -10,7 +10,6 @@ import com.kbank.convenience.stock.stock.mediation.controller.dto.GetListedStock
 import com.kbank.convenience.stock.stock.mediation.mapper.ListedStockMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,7 @@ public class ListedStockController {
 
 
     @GetMapping("/v1/detail/price")
-    public ResponseEntity<GetListedStockPriceDetailResponse> getListedStockPriceDetail(GetListedStockPriceDetailRequest request){
+    public Mono<GetListedStockPriceDetailResponse> getListedStockPriceDetail(GetListedStockPriceDetailRequest request){
         Mono<GetListedStockResponse> listedStock = listedStockService.getListedStock(request.itemCodeNumber());
         Mono<GetListedStockLatestPriceResponse> latestPrice = listedStockService.getListedStockLatestPrice(request.itemCodeNumber());
         Mono<GetListedStockPricesResponse> prices = listedStockService.getListedStockPrices(request.itemCodeNumber(),GetListedStockPricesRequest.builder()
@@ -36,7 +35,7 @@ public class ListedStockController {
                 .deltaDay(360L)
                 .build());
 
-        return ResponseEntity.ok().body(
+        return
                 Mono.zip(listedStock,latestPrice,prices)
                         .map(it -> GetListedStockPriceDetailResponse.builder()
                                 .stockKoreanName(it.getT1().stockKoreanName())
@@ -49,7 +48,6 @@ public class ListedStockController {
                                 .previousDayMaxPrice(it.getT2().highPrice())
                                 .yearlyMinPrice(it.getT3().minPrice())
                                 .yearlyMaxPrice(it.getT3().maxPrice())
-                                .build()).block()
-        );
+                                .build());
     }
 }
