@@ -16,9 +16,10 @@ public class HeaderPropagateFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return chain.filter(exchange)
                 .contextWrite(e -> {
+                    //Webflux 기반 헤더에서
                     Map<String, String> singleValueMap = exchange.getRequest().getHeaders().toSingleValueMap();
-                    log.info("chain Header {}",singleValueMap.get("kbank_standard_header"));
-                    return e.put("kbank_standard_header", "ASDF");
+                    log.debug("chain Header from stock-gateway {}",singleValueMap.get("kbank_standard_header"));
+                    return e.put("kbank_standard_header", singleValueMap.get("kbank_standard_header"));
                 });
     }
 }
