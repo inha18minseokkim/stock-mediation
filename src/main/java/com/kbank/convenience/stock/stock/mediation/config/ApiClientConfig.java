@@ -28,7 +28,7 @@ public class ApiClientConfig {
                 .filter(ExchangeFilterFunction
                         .ofRequestProcessor(
                         request -> Mono.deferContextual(context -> {
-                            //HeaderPropagateFilter 에서 ContextWrite 한 헤더 값을 여기서 Context get 함
+                            //KbankHeaderToContextFilter 에서 ContextWrite 한 헤더 값을 여기서 Context get 함
                             log.debug("WebClient header from Context {}",context.get("kbank_standard_header").toString());
                             log.debug("{}",request.url());
                             //ClientRequest를 새로 만들어서 헤더갑을 propagate 함. 이러면 종단 파드에 헤더 전달 가능.
