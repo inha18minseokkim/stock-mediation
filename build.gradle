@@ -34,7 +34,8 @@ dependencies {
     implementation 'com.playtika.reactivefeign:feign-reactor-core:4.2.1'
     implementation 'com.playtika.reactivefeign:feign-reactor-webclient:4.2.1'
     implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:4.2.1'
-
+    implementation 'com.playtika.reactivefeign:feign-reactor-cloud:4.2.1'
+    implementation 'com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1'
 
     implementation 'io.projectreactor:reactor-core:3.6.11'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'

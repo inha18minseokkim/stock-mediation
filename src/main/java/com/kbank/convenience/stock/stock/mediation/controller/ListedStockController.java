@@ -37,6 +37,7 @@ public class ListedStockController {
 
         return
                 Mono.zip(listedStock,latestPrice,prices)
+                        .contextWrite(e -> e.put("kbank_standard_header","ASDFxx"))
                         .map(it -> GetListedStockPriceDetailResponse.builder()
                                 .stockKoreanName(it.getT1().stockKoreanName())
                                 .itemCodeNumber(it.getT1().itemCodeNumber())
