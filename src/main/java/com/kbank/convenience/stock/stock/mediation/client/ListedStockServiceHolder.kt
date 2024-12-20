@@ -5,8 +5,11 @@ import com.kbank.convenience.stock.stock.mediation.logger
 import feign.Param
 import feign.QueryMap
 import feign.RequestLine
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
+import kotlin.coroutines.coroutineContext
 
 
 @Component
@@ -15,17 +18,20 @@ class ListedStockServiceHolder(val listedStockService: ListedStockService,
 ) {
     val log = logger()
     suspend fun getListedStock(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockResponse {
-        log.info("getListedStock")
+//        delay(1000L)
+        log.info("getListedStock, {}",coroutineContext.isActive)
         return listedStockService.getListedStock(itemCodeNumber)
     }
 
     suspend fun getListedStockLatestPrice(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockLatestPriceResponse {
-        log.info("getListedStockLatestPrice")
+//        delay(1000L)
+        log.info("getListedStockLatestPrice, {}",coroutineContext.isActive)
         return listedStockService.getListedStockLatestPrice(itemCodeNumber)
     }
 
     suspend fun getListedStockPrices(@Param("itemCodeNumber") itemCodeNumber: String?, @QueryMap request: GetListedStockPricesRequest?): GetListedStockPricesResponse {
-        log.info("getListedStockPrices")
+//        delay(1000L)
+        log.info("getListedStockPrices, {}",coroutineContext.isActive)
         return listedStockService.getListedStockPrices(itemCodeNumber,request)
     }
 
