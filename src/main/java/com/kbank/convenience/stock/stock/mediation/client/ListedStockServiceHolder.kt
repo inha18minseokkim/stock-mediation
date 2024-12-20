@@ -5,8 +5,7 @@ import com.kbank.convenience.stock.stock.mediation.logger
 import feign.Param
 import feign.QueryMap
 import feign.RequestLine
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.*
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
 import kotlin.coroutines.coroutineContext
@@ -17,22 +16,18 @@ import kotlin.coroutines.coroutineContext
 class ListedStockServiceHolder(val listedStockService: ListedStockService,
 ) {
     val log = logger()
-    suspend fun getListedStock(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockResponse {
-//        delay(1000L)
-        log.info("getListedStock, {}",coroutineContext.isActive)
-        return listedStockService.getListedStock(itemCodeNumber)
+    fun getListedStock(@Param("itemCodeNumber") itemCodeNumber: String?): Deferred<GetListedStockResponse> {
+        return CoroutineScope(Dispatchers.IO).async {  listedStockService.getListedStock(itemCodeNumber) }
     }
 
-    suspend fun getListedStockLatestPrice(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockLatestPriceResponse {
-//        delay(1000L)
-        log.info("getListedStockLatestPrice, {}",coroutineContext.isActive)
-        return listedStockService.getListedStockLatestPrice(itemCodeNumber)
+    fun getListedStockLatestPrice(@Param("itemCodeNumber") itemCodeNumber: String?): Deferred<GetListedStockLatestPriceResponse> {
+//        log.info("getListedStockLatestPrice, {}",coroutineContext.isActive)
+        return CoroutineScope(Dispatchers.IO).async { listedStockService.getListedStockLatestPrice(itemCodeNumber) }
     }
 
-    suspend fun getListedStockPrices(@Param("itemCodeNumber") itemCodeNumber: String?, @QueryMap request: GetListedStockPricesRequest?): GetListedStockPricesResponse {
-//        delay(1000L)
-        log.info("getListedStockPrices, {}",coroutineContext.isActive)
-        return listedStockService.getListedStockPrices(itemCodeNumber,request)
+    fun getListedStockPrices(@Param("itemCodeNumber") itemCodeNumber: String?, @QueryMap request: GetListedStockPricesRequest?): Deferred<GetListedStockPricesResponse> {
+//        log.info("getListedStockPrices, {}",coroutineContext.isActive)
+        return CoroutineScope(Dispatchers.IO).async { listedStockService.getListedStockPrices(itemCodeNumber,request) }
     }
 
     suspend fun getListedStockFinancialRatio(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockFinancialRatioResponse {
