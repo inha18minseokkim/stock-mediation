@@ -1,30 +1,24 @@
 package com.kbank.convenience.stock.stock.mediation.controller
 
-import com.kbank.convenience.stock.stock.mediation.client.ListedStockService
 import com.kbank.convenience.stock.stock.mediation.client.ListedStockServiceHolder
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockLatestPriceResponse
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockPricesRequest
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockPricesResponse
-import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockPricesResponse.GetListedStockPricesSubResponse
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockResponse
 import com.kbank.convenience.stock.stock.mediation.controller.dto.GetListedStockPriceDetailRequest
 import com.kbank.convenience.stock.stock.mediation.controller.dto.GetListedStockPriceDetailResponse
-import com.kbank.convenience.stock.stock.mediation.mapper.ListedStockMapper
 import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Mono
-import java.util.stream.Collectors
 
 @RequestMapping(path = ["/stock/listed-stock"])
 @RequiredArgsConstructor
 @Slf4j
 @RestController
 class ListedStockController(
-        private val listedStockService: ListedStockServiceHolder,
-        private val mapper: ListedStockMapper) {
+        private val listedStockService: ListedStockServiceHolder) {
 
     @GetMapping("/v1/detail/price")
     suspend fun getListedStockPriceDetail(request: GetListedStockPriceDetailRequest): GetListedStockPriceDetailResponse {
