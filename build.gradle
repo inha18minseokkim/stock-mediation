@@ -1,14 +1,18 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
 }
 
 group = 'com.kbank.convenience.stock'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
@@ -23,6 +27,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "2023.0.2")
+    set('coroutinesVersion', "1.9.0")
 }
 
 dependencies {
@@ -36,6 +41,10 @@ dependencies {
     implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:4.2.1'
     implementation 'com.playtika.reactivefeign:feign-reactor-cloud:4.2.1'
     implementation 'com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1'
+
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactor:${coroutinesVersion}"
 
     implementation 'io.projectreactor:reactor-core:3.6.11'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -58,4 +67,11 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += '-Xjsr305=strict'
+        jvmTarget = '17'
+    }
 }

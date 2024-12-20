@@ -25,28 +25,31 @@ public class ApiClientConfig {
     @Bean
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder()
-                .filter(ExchangeFilterFunction
-                        .ofRequestProcessor(
+                .filter(kbankHeaderPropagationFilter()
+                );
+    }
+
+    private static ExchangeFilterFunction kbankHeaderPropagationFilter() {
+        return ExchangeFilterFunction
+                .ofRequestProcessor(
                         request -> Mono.deferContextual(context -> {
-                            //KbankHeaderToContextFilter 에서 ContextWrite 한 헤더 값을 여기서 Context get 함
-                            log.debug("WebClient header from Context {}",context.get("kbank_standard_header").toString());
-                            log.debug("{}",request.url());
-                            //ClientRequest를 새로 만들어서 헤더갑을 propagate 함. 이러면 종단 파드에 헤더 전달 가능.
-                            ClientRequest build = ClientRequest.from(request)
-                                    .header("kbank_standard_header",context.get("kbank_standard_header").toString())
-                                    .build();
-                            return Mono.just(build);
-                        }
-                            )
+                                    //KbankHeaderToContextFilter 에서 ContextWrite 한 헤더 값을 여기서 Context get 함
+                                    log.debug("WebClient header from Context {}", context.get("kbank_standard_header").toString());
+                                    log.debug("{}", request.url());
+                                    //ClientRequest를 새로 만들어서 헤더갑을 propagate 함. 이러면 종단 파드에 헤더 전달 가능.
+                                    ClientRequest build = ClientRequest.from(request)
+                                            .header("kbank_standard_header", context.get("kbank_standard_header").toString())
+                                            .build();
+                                    return Mono.just(build);
+                                }
                         )
                 );
     }
+
     @Bean
     public ListedStockService listedStockService() {
-        ListedStockService target =  WebReactiveFeign
+        return WebReactiveFeign
                 .<ListedStockService>builder(webClientBuilder())
-                .target(ListedStockService.class,"http://127.0.0.1:8088/listed-stock-service")
-                ;
-        return target;
+                .target(ListedStockService.class,"http://127.0.0.1:8088/listed-stock-service");
     }
 }
