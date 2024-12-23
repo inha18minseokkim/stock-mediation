@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import reactor.util.function.Tuple3
-import java.util.stream.Collectors
 
 @RequestMapping(path = ["/stock/listed-stock"])
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ class ListedStockController(
         val prices = listedStockService.getListedStockPrices(request.itemCodeNumber, GetListedStockPricesRequest(
                 baseDateTime = request.baseDateTime,
                 deltaDay = 360L
-        )
+            )
         )
 
         return Mono.zip(listedStock, latestPrice, prices)
