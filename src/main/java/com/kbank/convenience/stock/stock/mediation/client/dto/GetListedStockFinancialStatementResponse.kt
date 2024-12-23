@@ -1,17 +1,15 @@
-package com.kbank.convenience.stock.stock.mediation.client.dto;
+package com.kbank.convenience.stock.stock.mediation.client.dto
 
-import lombok.Builder;
-
-import java.time.LocalDate;
+import lombok.Builder
+import java.time.LocalDate
 
 @Builder
-public record GetListedStockFinancialStatementResponse(
-        LocalDate baseDate,
-        Long sales,
-        Long businessProfit,
-        Long netIncome,
-        Long asset,
-        Long debit,
-        Long capital
-) {
-}
+@JvmRecord
+data class GetListedStockFinancialStatementResponse(val baseDate: LocalDate,
+                                                    val sales: Long,
+                                                    val businessProfit: Long,
+                                                    val netIncome: Long,
+                                                    val asset: Long,
+                                                    val debit: Long,
+                                                    val capital: Long
+)

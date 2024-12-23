@@ -1,20 +1,19 @@
-package com.kbank.convenience.stock.stock.mediation.client.dto;
+package com.kbank.convenience.stock.stock.mediation.client.dto
 
-import lombok.Builder;
-
-import java.time.LocalDate;
-import java.util.List;
+import lombok.Builder
+import java.time.LocalDate
 
 @Builder
-public record GetListedStockPastFinancialStatementsResponse(
-        String itemCodeNumber,
-        String targetStatement,
-        List<PastFinancialStatement> list
+@JvmRecord
+data class GetListedStockPastFinancialStatementsResponse(val itemCodeNumber: String,
+                                                         val targetStatement: String,
+                                                         val list: List<PastFinancialStatement>
 
 ) {
     @Builder
-    public record PastFinancialStatement(
-            LocalDate baseDate,
-            Long amount
-    ) {}
+    @JvmRecord
+    data class PastFinancialStatement(
+                                    val baseDate: LocalDate,
+                                    val amount: Long
+    )
 }

@@ -1,29 +1,28 @@
-package com.kbank.convenience.stock.stock.mediation.client.dto;
+package com.kbank.convenience.stock.stock.mediation.client.dto
 
-import lombok.Builder;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.Builder
+import java.time.LocalDateTime
 
 @Builder
-public record GetListedStockRankResponse(
-        List<GetListedStockRankSubResponse> list
+@JvmRecord
+data class GetListedStockRankResponse(val list: List<GetListedStockRankSubResponse>
 ) {
     @Builder
-    public record GetListedStockRankSubResponse(
-            LocalDateTime baseDateTime,
-            String itemCodeNumber,
-            String stockKoreanName,
-            Long openPrice,
-            Long highPrice,
-            Long lowPrice,
-            Long closePrice,
-            Long volume,
-            Long value,
-            Long changePrice,
-            Double changeRate,
-            Long alreadyIssuedStock,
-            Long marketPriceTotal,
-            Boolean tradingStop
-    ) {}
+    @JvmRecord
+    data class GetListedStockRankSubResponse(
+                                        val baseDateTime: LocalDateTime,
+                                        val itemCodeNumber: String,
+                                        val stockKoreanName: String,
+                                        val openPrice: Long,
+                                        val highPrice: Long,
+                                        val lowPrice: Long,
+                                        val closePrice: Long,
+                                        val volume: Long,
+                                        val value: Long,
+                                        val changePrice: Long,
+                                        val changeRate: Double,
+                                        val alreadyIssuedStock: Long,
+                                        val marketPriceTotal: Long,
+                                        val tradingStop: Boolean
+    )
 }

@@ -21,23 +21,13 @@ data class GetListedStockPriceDetailResponse( //종목상세정보
 
 ) {
     @Builder
-    class PriceElement(@JsonFormat(pattern = "yyyyMMdd") @DateTimeFormat(pattern = "yyyyMMdd") baseDate: LocalDate,
-                       closePrice: Long,
-                       changePrice: Long,
-                       changeRate: Double
-    ) {
-        @JsonFormat(pattern = "yyyyMMdd")
-        @DateTimeFormat(pattern = "yyyyMMdd")
-        val baseDate: LocalDate
-        val closePrice: Long
-        val changePrice: Long
-        val changeRate: Double
-
-        init {
-            this.baseDate = baseDate
-            this.closePrice = closePrice
-            this.changePrice = changePrice
-            this.changeRate = changeRate
-        }
-    }
+    @JvmRecord
+    data class PriceElement(
+            @JsonFormat(pattern = "yyyyMMdd")
+            @DateTimeFormat(pattern = "yyyyMMdd")
+            val baseDate: LocalDate,
+            val closePrice: Long,
+            val changePrice: Long,
+            val changeRate: Double
+    )
 }
