@@ -1,6 +1,6 @@
 package com.kbank.convenience.stock.stock.mediation.controller
 
-import com.kbank.convenience.stock.stock.mediation.client.ListedStockServiceHolder
+import com.kbank.convenience.stock.stock.mediation.client.ListedStockServiceAdapter
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockLatestPriceResponse
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockPricesRequest
 import com.kbank.convenience.stock.stock.mediation.client.dto.GetListedStockPricesResponse
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController
 @Slf4j
 @RestController
 class ListedStockController(
-        private val listedStockService: ListedStockServiceHolder) {
+        private val listedStockService: ListedStockServiceAdapter) {
 
     @GetMapping("/v1/detail/price")
     suspend fun getListedStockPriceDetail(request: GetListedStockPriceDetailRequest): GetListedStockPriceDetailResponse {
-        val listedStock: GetListedStockResponse = listedStockService.getListedStock(request.itemCodeNumber)
-        val latestPrice: GetListedStockLatestPriceResponse = listedStockService.getListedStockLatestPrice(request.itemCodeNumber)
-        val prices: GetListedStockPricesResponse = listedStockService.getListedStockPrices(request.itemCodeNumber, GetListedStockPricesRequest(request.baseDateTime, 360L))
+        val listedStock = listedStockService.getListedStock(request.itemCodeNumber)
+        val latestPrice = listedStockService.getListedStockLatestPrice(request.itemCodeNumber)
+        val prices = listedStockService.getListedStockPrices(request.itemCodeNumber, GetListedStockPricesRequest(request.baseDateTime, 360L))
         return GetListedStockPriceDetailResponse(
                 stockKoreanName = listedStock.stockKoreanName,
                 itemCodeNumber = listedStock.itemCodeNumber,

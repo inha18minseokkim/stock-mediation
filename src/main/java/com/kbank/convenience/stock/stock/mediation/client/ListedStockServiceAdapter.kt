@@ -4,29 +4,33 @@ import com.kbank.convenience.stock.stock.mediation.client.dto.*
 import com.kbank.convenience.stock.stock.mediation.logger
 import feign.Param
 import feign.QueryMap
-import feign.RequestLine
+import javafx.application.Application.launch
+import kotlinx.coroutines.*
 import lombok.extern.slf4j.Slf4j
+import org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder
+import org.springframework.boot.task.SimpleAsyncTaskSchedulerBuilder
 import org.springframework.stereotype.Component
 
 
 @Component
 @Slf4j
-class ListedStockServiceHolder(val listedStockService: ListedStockService,
+class ListedStockServiceAdapter(
+        private val listedStockService: ListedStockService
 ) {
-    val log = logger()
+    private val log = logger()
     suspend fun getListedStock(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockResponse {
         log.info("getListedStock")
-        return listedStockService.getListedStock(itemCodeNumber)
+        return withContext(Dispatchers.IO){ listedStockService.getListedStock(itemCodeNumber)}
     }
 
     suspend fun getListedStockLatestPrice(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockLatestPriceResponse {
         log.info("getListedStockLatestPrice")
-        return listedStockService.getListedStockLatestPrice(itemCodeNumber)
+        return withContext(Dispatchers.IO) {listedStockService.getListedStockLatestPrice(itemCodeNumber)}
     }
 
-    suspend fun getListedStockPrices(@Param("itemCodeNumber") itemCodeNumber: String?, @QueryMap request: GetListedStockPricesRequest?): GetListedStockPricesResponse {
+    suspend fun getListedStockPrices(@Param("itemCodeNumber") itemCodeNumber: String?, @QueryMap request: GetListedStockPricesRequest?):GetListedStockPricesResponse {
         log.info("getListedStockPrices")
-        return listedStockService.getListedStockPrices(itemCodeNumber,request)
+        return withContext(Dispatchers.IO) {listedStockService.getListedStockPrices(itemCodeNumber,request)}
     }
 
     suspend fun getListedStockFinancialRatio(@Param("itemCodeNumber") itemCodeNumber: String?): GetListedStockFinancialRatioResponse {
