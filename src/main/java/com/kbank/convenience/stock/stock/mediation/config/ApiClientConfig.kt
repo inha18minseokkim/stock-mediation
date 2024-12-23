@@ -19,14 +19,15 @@ open class ApiClientConfig(
         return JacksonDecoder(objectMapper)
     }
     @Bean
-    open fun apacheHttp5Client(): ApacheHttp5Client{
+    open fun apacheHttp5Client(): ApacheHttp5Client {
         return ApacheHttp5Client()
     }
+
     @Bean
     open fun listedStockService(): ListedStockService {
         return Feign.builder()
-                .decoder(jacksonDecoder())
                 .client(apacheHttp5Client())
+                .decoder(jacksonDecoder())
                 .target(ListedStockService::class.java, "http://127.0.0.1:8088/listed-stock-service")
     }
 }
