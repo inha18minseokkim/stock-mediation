@@ -4,11 +4,8 @@ import com.kbank.convenience.stock.stock.mediation.client.dto.*
 import com.kbank.convenience.stock.stock.mediation.logger
 import feign.Param
 import feign.QueryMap
-import javafx.application.Application.launch
 import kotlinx.coroutines.*
 import lombok.extern.slf4j.Slf4j
-import org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder
-import org.springframework.boot.task.SimpleAsyncTaskSchedulerBuilder
 import org.springframework.stereotype.Component
 
 
