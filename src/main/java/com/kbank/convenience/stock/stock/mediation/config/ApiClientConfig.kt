@@ -2,11 +2,12 @@ package com.kbank.convenience.stock.stock.mediation.config
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.kbank.convenience.stock.stock.mediation.client.ListedStockService
+import com.kbank.convenience.stock.stock.mediation.client.impl.ListedStockServiceImpl
+import com.kbank.convenience.stock.stock.mediation.client.service.ListedStockService
 import com.kbank.convenience.stock.stock.mediation.logger
-import feign.jackson.JacksonDecoder
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.Logger
 import org.springframework.context.annotation.Bean
@@ -14,12 +15,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.ClientRequest
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
-import reactivefeign.webclient.WebReactiveFeign
 import reactor.core.publisher.Mono
 import reactor.util.context.ContextView
 
 @Configuration
-@Slf4j
 open class ApiClientConfig(
         val log: Logger = logger()
 ) {
@@ -27,16 +26,10 @@ open class ApiClientConfig(
     open fun objectMapper(): ObjectMapper {
         return jacksonObjectMapper().apply {
             registerModule(JavaTimeModule())
-            disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+//            disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+//            disable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         }
-    }
-
-    @Bean
-    open fun jacksonDecoder(): JacksonDecoder {
-
-        val jacksonDecoder = JacksonDecoder(objectMapper())
-        return jacksonDecoder
     }
 
     @Bean
@@ -48,9 +41,12 @@ open class ApiClientConfig(
 
     @Bean
     open fun listedStockService(): ListedStockService {
-        return WebReactiveFeign
-                .builder<ListedStockService>(webClientBuilder())
-                .target(ListedStockService::class.java, "http://127.0.0.1:8088/listed-stock-service")
+        return ListedStockServiceImpl(
+            webClientBuilder()
+                .baseUrl("http://127.0.0.1:38080/listed-stock-service")
+//                .baseUrl("http://125.176.39.143:8880/convenience/stock/listed-stock-service")
+            ,objectMapper()
+        )
     }
 
     companion object {

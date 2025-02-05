@@ -1,6 +1,7 @@
 package com.kbank.convenience.stock.stock.mediation.client.dto
 
 import lombok.Builder
+import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
 @Builder
@@ -12,7 +13,8 @@ data class GetListedStockPricesResponse(val maxPrice: Long,
 ) {
     @Builder
     @JvmRecord
-    data class GetListedStockPricesSubResponse(val baseDate: LocalDate,
+    data class GetListedStockPricesSubResponse(
+                                          val baseDate: LocalDate,
                                           val openPrice: Long,
                                           val highPrice: Long,
                                           val lowPrice: Long,
