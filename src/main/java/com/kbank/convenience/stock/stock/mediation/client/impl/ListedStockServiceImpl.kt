@@ -25,12 +25,6 @@ class ListedStockServiceImpl(
         // JSON 직렬화 -> Map 변환
         val jsonString = objectMapper.writeValueAsString(request) // {"baseDateTime":"20240205123456","deltaDay":7}
         val jsonNode = objectMapper.readTree(jsonString) as ObjectNode
-        val s = jsonNode.fields().asSequence()
-            .joinToString("&") { "${it.key}=${it.value.asText()}" }
-        log.info("${request}")
-        log.info("${jsonString}")
-        log.info("${jsonNode}")
-        log.info(s)
         // Query Parameter 생성
         return jsonNode.fields().asSequence()
             .joinToString("&") { "${it.key}=${it.value.asText()}" }
